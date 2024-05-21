@@ -1,0 +1,28 @@
+.mirrorButton {
+	cursor: pointer;
+}
+
+.speedButton {
+	cursor: pointer;
+}
+
+.postActionButton {
+	padding-bottom: 5px;
+}
+
+.postSpeedOptionsContainer {
+	text-align: unset;
+}
+
+.postSpeedOption {
+	display: inline;
+	padding-right: 5px;
+}
+
+.reelSpeedOptionsContainer {
+	text-align: center;
+}
+
+.reelSpeedOption {
+
+}

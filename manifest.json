@@ -1,0 +1,22 @@
+{
+  "name": "Content Creator Insta Extension",
+  "description": "An Instagram extension to help content creators create dance content faster.",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.instagram.com/*"
+      ],
+      "js": ["contentCreatorScript.js"],
+      "css": [ "style.css" ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "activeTab"
+  ]
+}
