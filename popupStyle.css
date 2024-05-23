@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    min-height: 100px;
+    min-width: 300px;
+}
+
+#header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#extension-icon {
+    width: 20px; /* Specify width */
+    height: 20px; /* Specify height */
+    margin-right: 10px;
+}
+
+#extension-name {
+    font-size: 1.1em;
+}
+
+#flipIcon,
+#speedIcon {
+    vertical-align: bottom;
+}
+
+#footer {
+    padding-top: 20px;
+    font-size: 0.3em;
+}
