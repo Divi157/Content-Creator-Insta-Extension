@@ -8,7 +8,7 @@
     const classNames = {
         homePage: {
             elementType: 'homePage',
-            elementContainerClassName: 'xvbhtw8 x78zum5 xdt5ytf x1iyjqo2 x182iqb8',
+            elementContainerClassName: 'x9f619 xjbqb8w x78zum5 x168nmei x13lgxp2 x5pf9jr xo71vjh x1uhb9sk x1plvlek xryxfnj x1c4vz4f x2lah0s xdt5ytf xqjyukv x6s0dn4 x1oa3qoh x1nhvcw1',
             elementClassName: 'xyzq4qe x5yr21d x10l6tqk xh8yej3',
             elementParentClassName: 'x78zum5 xdt5ytf x5yr21d xa1mljc xh8yej3 x1bs97v6 x1q0q8m5 xso031l x11aubdm xnc8uc2',
             actionElementClassName: 'x6s0dn4 xrvj5dj x1o61qjw x12nagc x1gslohp > x78zum5',
@@ -19,7 +19,13 @@
             audioPageLinkUnderActionsClass : 'x1lcm9me x1yr5g0i xrt01vj x10y3i5r xxk0z11 x6ikm8r x10wlt62 xvy4d1p xj34u2y xr117oq x1tqkkhy xpjowex xz3qqb7 x13fuv20 xu3j5b3 x1q0q8m5 x26u7qi x178xt8z xm81vs4 xso031l xy80clv',
             audioPageLinkUnderReelAboutClass : 'x9f619 xjbqb8w x78zum5 x168nmei x13lgxp2 x5pf9jr xo71vjh x1emribx x1uhb9sk x6ikm8r x10wlt62 x1c4vz4f xs83m0k xdt5ytf xqjyukv x1qjc9v5 x1oa3qoh x1nhvcw1',
             threeDotsLinkClass : 'html-div xe8uvvx xdj266r x11i5rnm x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x6s0dn4 x78zum5 x1chd833',
-            goToPostLinkUnderThreeDotsClass : 'x1lliihq x1plvlek xryxfnj x1n2onr6 x193iq5w xeuugli x1fj9vlw x13faqbe x1vvkbs x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x xqfltyo xvs91rp xo1l8bm x5n08af x10wh9bi x1wdrske x8viiok x18hxmgj'
+            goToPostLinkUnderThreeDotsClass : 'x1lliihq x1plvlek xryxfnj x1n2onr6 x193iq5w xeuugli x1fj9vlw x13faqbe x1vvkbs x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x xqfltyo xvs91rp xo1l8bm x5n08af x10wh9bi x1wdrske x8viiok x18hxmgj',
+            storiesContainerClass : '_aac4 _aac5 _aac6 _aj3f _ajdu'
+        },
+
+        storiesPage: {
+            elementType: 'storiesPage',
+            storiesCloseButtonClass : 'xjbqb8w x1ypdohk xw7yly9 xktsk01 x1yztbdb x1d52u69 x10l6tqk x13vifvy xds687c'
         },
 
         profilePage: {
@@ -108,6 +114,8 @@
             timeout = 3000;
         } else if (href.indexOf('/reels/') !== -1) {
             timeout = 3000;
+        } else if (href.indexOf('/stories/') !== -1) {
+            timeout = 3000;
         }
 
         setTimeout(function() {
@@ -118,6 +126,12 @@
             //home page
             if (href === 'https://www.instagram.com/') { 
                 runHomePageScriptFunctions();
+            }
+            // stories page
+            else if (href.indexOf('/stories/') !== -1) { 
+                registerLinkClickEvents([
+                    classNames.storiesPage.storiesCloseButtonClass
+                ]);
             }
             // chats page
             else if (href.indexOf('/direct/inbox') !== -1) { 
@@ -231,26 +245,16 @@
         return false;
     };
 
-    function linkClickEventListener(event) {
-        const targetElement = event.target.className;
-        if (this.childClassNamesIgnored.includes(targetElement)) {
-            return;
-        }
-
-        instaLinkHandler();
-    };
-
     // This function attaches click event handlers on given classes. Required as insta is one page application.
-    function registerLinkClickEvents(containerClassNamesMonitored, childClassNamesIgnored = []) {
+    function registerLinkClickEvents(containerClassNamesMonitored, rootElement = document) {
         for (var i=0; i<containerClassNamesMonitored.length; i++) {
-            const containerElementsMonitored = document.getElementsByClassName(containerClassNamesMonitored[i]);
+            const containerElementsMonitored = rootElement.getElementsByClassName(containerClassNamesMonitored[i]);
 
             for (var j=0; j<containerElementsMonitored.length; j++) {
                 const containerElementMonitored = containerElementsMonitored[j];
 
-                if (!hasEventListener(containerElementMonitored, "click", linkClickEventListener)) {
-                    containerElementMonitored.childClassNamesIgnored = childClassNamesIgnored;
-                    containerElementMonitored.addEventListener("click", linkClickEventListener, { capture: true, once: true});
+                if (!hasEventListener(containerElementMonitored, "click", instaLinkHandler)) {
+                    containerElementMonitored.addEventListener("click", instaLinkHandler, { capture: true, once: true});
                 }
             }
         }
@@ -269,7 +273,11 @@
             classNames.homePage.audioPageLinkUnderActionsClass,
             classNames.homePage.audioPageLinkUnderReelAboutClass,
             classNames.homePage.threeDotsLinkClass,
-            classNames.homePage.goToPostLinkUnderThreeDotsClass
+            classNames.homePage.goToPostLinkUnderThreeDotsClass,
+        ], reelsContainerElement);
+
+        registerLinkClickEvents([
+            classNames.homePage.storiesContainerClass
         ]);
 
         const mutationConfig = { attributes: true, characterData: true, subtree: true  };
