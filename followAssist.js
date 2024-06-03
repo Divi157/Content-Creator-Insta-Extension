@@ -20,7 +20,8 @@
             audioPageLinkUnderReelAboutClass : 'x9f619 xjbqb8w x78zum5 x168nmei x13lgxp2 x5pf9jr xo71vjh x1emribx x1uhb9sk x6ikm8r x10wlt62 x1c4vz4f xs83m0k xdt5ytf xqjyukv x1qjc9v5 x1oa3qoh x1nhvcw1',
             threeDotsLinkClass : 'html-div xe8uvvx xdj266r x11i5rnm x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x6s0dn4 x78zum5 x1chd833',
             goToPostLinkUnderThreeDotsClass : 'x1lliihq x1plvlek xryxfnj x1n2onr6 x193iq5w xeuugli x1fj9vlw x13faqbe x1vvkbs x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x xqfltyo xvs91rp xo1l8bm x5n08af x10wh9bi x1wdrske x8viiok x18hxmgj',
-            storiesContainerClass : '_aac4 _aac5 _aac6 _aj3f _ajdu'
+            storiesContainerClass : '_aac4 _aac5 _aac6 _aj3f _ajdu',
+            storyLinkClass: '_acaz'
         },
 
         storiesPage: {
@@ -115,7 +116,7 @@
         } else if (href.indexOf('/reels/') !== -1) {
             timeout = 3000;
         } else if (href.indexOf('/stories/') !== -1) {
-            timeout = 3000;
+            timeout = 3500;
         }
 
         setTimeout(function() {
@@ -230,21 +231,6 @@
         mutationObserver.observe(reelsContainerElementProfileReelsPage, mutationConfig);
     }
 
-    function getEventListeners(element, eventName) {
-        const events = element.__eventListeners ? element.__eventListeners : {};
-        return events[eventName] || [];
-    }
-
-    function hasEventListener(element, eventName, listener) {
-        const eventListeners = getEventListeners(element, eventName);
-        for (const eventListener of eventListeners) {
-            if (eventListener === listener) {
-                return true;
-            }
-        }
-        return false;
-    };
-
     // This function attaches click event handlers on given classes. Required as insta is one page application.
     function registerLinkClickEvents(containerClassNamesMonitored, rootElement = document) {
         for (var i=0; i<containerClassNamesMonitored.length; i++) {
@@ -252,10 +238,7 @@
 
             for (var j=0; j<containerElementsMonitored.length; j++) {
                 const containerElementMonitored = containerElementsMonitored[j];
-
-                if (!hasEventListener(containerElementMonitored, "click", instaLinkHandler)) {
-                    containerElementMonitored.addEventListener("click", instaLinkHandler, { capture: true, once: true});
-                }
+                containerElementMonitored.addEventListener("click", instaLinkHandler, { capture: true, once: true});
             }
         }
     }
@@ -277,13 +260,17 @@
         ], reelsContainerElement);
 
         registerLinkClickEvents([
-            classNames.homePage.storiesContainerClass
-        ]);
+            classNames.homePage.storyLinkClass
+        ], document.getElementsByClassName(classNames.homePage.storiesContainerClass)[0]);
 
         const mutationConfig = { attributes: true, characterData: true, subtree: true  };
         var mutationCallback = function(mutationsList, observer) {
             mutationsList.forEach((mutation) => {
                 setTimeout(function() {
+                    if (window.location.href.indexOf('/stories/') !== -1) {
+                        return;
+                    }
+
                     if (window.location.href !== 'https://www.instagram.com/') {
                         instaLinkHandler();
                     }
