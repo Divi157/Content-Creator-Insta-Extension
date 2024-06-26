@@ -1,7 +1,7 @@
 {
-  "name": "FollowAssist",
-  "description": "An Instagram extension to assist users in following along with reels or video posts.",
-  "version": "2.1.1",
+  "name": "DanceBud | Mirror, Slow Down & Speed Up Instagram Videos",
+  "description": "For anyone who loves creating and learning from videos on Instagram. Whether you're a dancer, fitness instructor, or video creator, DanceBud offers powerful tools to mirror video, slow down playback and speed up playback.",
+  "version": "3.0.0",
   "manifest_version": 3,
   "content_scripts": [
     {
