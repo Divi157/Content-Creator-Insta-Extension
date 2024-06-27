@@ -1,6 +1,6 @@
 {
-  "name": "DanceBud | Mirror, Slow Down & Speed Up Instagram Videos",
-  "description": "For anyone who loves creating and learning from videos on Instagram. Whether you're a dancer, fitness instructor, or video creator, DanceBud offers powerful tools to mirror video, slow down playback and speed up playback.",
+  "name": "DanceBuddy: Learn, Practice, and Create Dance Videos on Instagram",
+  "description": "Elevate Your Dance Journey with DanceBuddy's Powerful Tools.",
   "version": "3.0.0",
   "manifest_version": 3,
   "content_scripts": [
@@ -8,7 +8,7 @@
       "matches": [
         "https://www.instagram.com/*"
       ],
-      "js": ["followAssist.js"],
+      "js": ["dancebuddy.js"],
       "css": [ "style.css" ],
       "run_at": "document_end"
     }
